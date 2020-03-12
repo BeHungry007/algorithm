@@ -18,8 +18,10 @@ public class Demo04 {
 
     @Test
     public void test2() {
-        Father f = new Son();
-        s s1 = new s();
-        f = s1;
+        Father f = new Father();
+        f.a = "bb";
+        Son f1 = (Son) f;
+        System.out.println(f1.a);
     }
+
 }
