@@ -1,6 +1,5 @@
 package juniorDemo.demo100;
 
-import com.sun.jdi.IntegerType;
 import org.junit.Test;
 
 
@@ -30,7 +29,18 @@ public class Demo07 {
 
     @Test
     public void test2() {
-
+        Integer x = 123;
+        Integer y = 0;
+        if(x < 0 && x/10 == 0) {
+            System.out.println(true);
+        }
+        while (x > y) {
+            y = y * 10 + x % 10;
+            x /= 10;
+        }
+        if (x == y || x == y/10){
+            System.out.println(true);
+        }
     }
 
 
