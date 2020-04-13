@@ -8,17 +8,14 @@ import java.util.HashSet;
 public class Demo83 {
     @Test
     public void test01(){
-
     }
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null) return null;
-        Integer num = head.val;
         ListNode pre = head;
         while (head.next != null) {
-            if (num == head.next.val) {
+            if (head.val == head.next.val) {
                 head.next = head.next.next;
             } else {
-                num = head.next.val;
                 head = head.next;
             }
         }
