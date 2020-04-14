@@ -18,10 +18,8 @@ public class Demo491 {
     class Solution {
         Set<List<Integer>> res;
         int[] nums;
-        int n;
         public List<List<Integer>> findSubsequences(int[] nums) {
             this.nums = nums;
-            this.n = n;
             res = new HashSet<>();
             helper(new ArrayList<Integer>(), 0);
             return new ArrayList(res);
