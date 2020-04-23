@@ -36,4 +36,5 @@ public class Demo670 {
         String substring = s.substring(1, 2);
         System.out.println(substring);
     }
+
 }
