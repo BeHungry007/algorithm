@@ -3,7 +3,7 @@ package middleDemo.Demo100;
 import org.junit.Test;
 
 //两数相加
-public class Demo02 {
+public class Demo002 {
     @Test
     public void test01(){
         ListNode l1 = new ListNode(5);
