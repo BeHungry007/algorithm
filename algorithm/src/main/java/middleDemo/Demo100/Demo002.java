@@ -1,6 +1,7 @@
 package middleDemo.Demo100;
 
 import org.junit.Test;
+import utils.ListNode;
 
 //两数相加
 public class Demo002 {
@@ -108,12 +109,5 @@ public class Demo002 {
         }
         return pr.next;
 
-    }
-    class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) {
-            val = x;
-        }
     }
 }

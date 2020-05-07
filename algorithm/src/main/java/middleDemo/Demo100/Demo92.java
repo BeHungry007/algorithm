@@ -1,16 +1,12 @@
 package middleDemo.Demo100;
 
 import org.junit.Test;
+import utils.ListNode;
 
 /**
  * 反转链表II
  * 反转从位置m到n的链表。请使用一趟完成反转。
  */
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) { val = x; }
-}
 public class Demo92 {
     @Test
     public void test01(){
