@@ -1,5 +1,8 @@
 package ImportantDemo;
 
+/**
+ * 另一个树的子树
+ */
 public class Demo572Junior {
 
     public boolean isSubtree(TreeNode s, TreeNode t) {
