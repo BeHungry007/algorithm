@@ -2,9 +2,14 @@ package highDemo.demo100;
 
 
 
-import javax.ws.rs.core.Response;
 
 public class Father {
-
+    public String name;
+    public int age;
+    public Father() {}{};
+    public Father(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
 }
