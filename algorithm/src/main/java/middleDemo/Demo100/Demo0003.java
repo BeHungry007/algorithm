@@ -11,7 +11,7 @@ import java.util.Map;
 public class Demo0003 {
 
     /**
-     * 根据map集合put的特点，器返回值为替代的value数值。
+     * 根据map集合put的特点，其返回值为替代的value数值。
      */
     @Test
     public void test03() {

@@ -43,4 +43,32 @@ public class ThreeSum {
         }
         return ans;
     }
+
+    public List<List<Integer>> ans(int[] nums) {
+        Arrays.sort(nums);
+        int len = nums.length;
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i < len - 2; i++) {
+            int left = i + 1;
+            int right = len - 1;
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            if (nums[i] + nums[left] + nums[left + 1] > 0) return ans;
+            while (left < right) {
+                int tmp = nums[i] + nums[left] + nums[right];
+                if (tmp == 0) {
+                    ans.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    while (left < right && nums[right] == nums[right - 1]) right--;
+                    while (left < right && nums[left] == nums[left + 1]) left++;
+                    left++;
+                    right--;
+                } else if (tmp < 0) {
+                    left++;
+                } else if (tmp > 0) {
+                    right--;
+                }
+            }
+        }
+        return ans;
+
+    }
 }

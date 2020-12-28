@@ -46,4 +46,30 @@ public class Search {
         }
         return idx;
     }
+
+    public int search1(int[] nums, int target) {
+        int left = 0;
+        int idx = -1;
+        int right = nums.length - 1;
+        int tmp;
+        while (left < right) {
+            tmp = left + (right - left) / 2;
+            if(nums[tmp] == target) return tmp;
+            if (nums[0] > nums[tmp]) {
+                if (nums[tmp] < target && target <= nums[nums.length - 1]) {
+                    left = tmp;
+                } else {
+                    right = tmp - 1;
+                }
+            } else {
+                if(nums[0] <= target && target < nums[tmp]) {
+                    right = tmp - 1;
+                } else {
+                    left = tmp;
+                }
+            }
+        }
+
+        return idx;
+    }
 }

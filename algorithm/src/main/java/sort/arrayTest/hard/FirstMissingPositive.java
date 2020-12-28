@@ -17,36 +17,22 @@ public class FirstMissingPositive {
 
     public int firstMissingPositive2(int[] nums) {
         int len = nums.length;
-        int contains = 0;
         for (int i = 0; i < len; i++) {
-            if (nums[i] == 1) {
-                contains = 1;
-                break;
+            if (nums[i] <= 0) {
+                nums[i] = len + 1;
             }
         }
-        if (contains == 0) {
-            return 1;
-        }
+
         for (int i = 0; i < len; i++) {
-            if (nums[i] <= 0 || nums[i] > len) {
-                nums[i] = 1;
+            int tmp = Math.abs(nums[i]);
+            if (tmp <= len) {
+                nums[tmp - 1] = -Math.abs(nums[tmp - 1]);
             }
         }
         for (int i = 0; i < len; i++) {
-            int a = Math.abs(nums[i]);
-            if (a == len) {
-                nums[0] = -Math.abs(nums[0]);
-            } else {
-                nums[a] = -Math.abs(nums[a]);
-            }
-        }
-        for (int i = 1; i < len; i++) {
             if (nums[i] > 0) {
                 return i;
             }
-        }
-        if (nums[0] > 0) {
-            return len;
         }
         return len + 1;
 
