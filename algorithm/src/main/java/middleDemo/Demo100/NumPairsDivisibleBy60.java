@@ -1,4 +1,4 @@
-package sort.arrayTest.junior;
+package middleDemo.Demo100;
 
 import org.junit.Test;
 

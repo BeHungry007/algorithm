@@ -37,4 +37,16 @@ public class LetterCombinations {
         return;
     }
 
+    public void dfs1(String digits, int index, String s) {
+        if (index == digits.length()) {
+            ans.add(s);
+            return;
+        }
+        char c = digits.charAt(index);
+        String an = test[c - '0'];
+        for (int i = 0; i < an.length(); i++) {
+            dfs1(digits, index + 1, s + an.charAt(i));
+        }
+    }
+
 }

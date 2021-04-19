@@ -110,16 +110,6 @@ public class MapTest {
 
     @Test
     public void test09() {
-        //.b = "b";
-        //Set<Person> s1 = new HashSet<>();
-        //Set<Person> s2 = new HashSet<>();
-        //s1.add(p1);
-        //s1.add(p2);
-        //s2.add(p2);
-        //s1.retainAll(s2);
-        //System.out.println(s1.size());
-        //Iterator<Person> iterator = s1.iterator();
-        //System.out.println(iterator.next().b);
         String s = "{\"a\": \"a\", \"b\": \"c\"}";
         JsonParser jp = new JsonParser();
         jp.parse(s).getAsJsonObject();
@@ -159,6 +149,11 @@ public class MapTest {
                 {7,8,9}
         };
         System.out.println(nums[0][2]);
+
+    }
+
+    @Test
+    public void test022(){
 
     }
 

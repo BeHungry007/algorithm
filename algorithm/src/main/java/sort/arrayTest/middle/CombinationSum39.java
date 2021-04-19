@@ -16,7 +16,7 @@ import java.util.*;
  * 回溯算法
  *
  */
-public class CombinationSum {
+public class CombinationSum39 {
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
@@ -61,5 +61,27 @@ public class CombinationSum {
             path.removeLast();
 
         }
+    }
+
+    private void dfs1(int[] candidates,
+                     int len,
+                     int residue,
+                     int begin,
+                     Deque<Integer> path,
+                     List<List<Integer>> res) {
+        if (residue == 0) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        if (begin == candidates.length || residue - candidates[begin] < 0) {
+            return;
+        }
+
+        dfs1(candidates, len, residue, begin + 1, path, res);
+
+        path.add(candidates[begin]);
+        dfs1(candidates, len, residue - candidates[begin], begin, path, res);
+        path.removeLast();
     }
 }
