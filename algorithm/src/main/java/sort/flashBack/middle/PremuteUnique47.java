@@ -1,5 +1,7 @@
 package sort.flashBack.middle;
 
+import org.junit.Test;
+
 import java.util.*;
 
 /**
@@ -7,6 +9,18 @@ import java.util.*;
  *
  */
 public class PremuteUnique47 {
+
+    @Test
+    public void test01(){
+        String s = "aaa";
+        System.out.println(s.charAt(0) == s.charAt(1));
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(1);
+        list.add(2);
+        int[] nums = {1,2,1};
+        permuteUnique(nums);
+    }
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
 

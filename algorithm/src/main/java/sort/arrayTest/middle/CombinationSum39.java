@@ -1,5 +1,7 @@
 package sort.arrayTest.middle;
 
+import org.junit.Test;
+
 import java.util.*;
 
 /**
@@ -17,6 +19,44 @@ import java.util.*;
  *
  */
 public class CombinationSum39 {
+
+    @Test
+    public void test01(){
+        int[] arr = {2,3,6,7};
+        combinationSum1(arr, 7);
+    }
+
+    public List<List<Integer>> combinationSum1(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        int len = candidates.length;
+        Arrays.sort(candidates);
+        dfs1(candidates, 0, len, new ArrayDeque<>(), target, res);
+        return res;
+    }
+
+    private void dfs1(int[] candidates, int cur, int lens, Deque<Integer> ad, int target, List<List<Integer>> res) {
+        if (target == 0) {
+            res.add(new ArrayList<>(ad));
+            return;
+        }
+
+//        if (cur == lens || target - candidates[cur] < 0) {
+//            return;
+//        }
+
+        for (int i = cur; i < lens; i++) {
+
+            if (target - candidates[i] < 0) {
+                break;
+            }
+
+            ad.addLast(candidates[i]);
+            dfs1(candidates, i, lens, ad, target - candidates[i], res);
+            ad.removeLast();
+        }
+
+
+    }
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
