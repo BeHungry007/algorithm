@@ -46,32 +46,24 @@ public class Merge56 {
         System.out.println("s");
     }
 
-    public static int[][] merge1(int[][] intervals) {
-        if (intervals == null || intervals.length == 0) {
-            return new int[0][2];
-        }
-        if (intervals.length == 1) {
-            return intervals;
-        }
+    public int[][] merge1(int[][] intervals) {
         Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
                 return o1[0] - o2[0];
             }
         });
-        List<int[]> ans = new ArrayList<>();
-
+        List<int[]> merged = new ArrayList<int[]>();
         for (int i = 0; i < intervals.length; i++) {
-            int L = intervals[i][0];
-            int R = intervals[i][1];
-            if (i == 0 || L > ans.get(ans.size() - 1)[1]) {
-                ans.add(new int[]{L, R});
-            } else {
-                ans.get(ans.size() - 1)[1] = Math.max(R, ans.get(ans.size() - 1)[1]);
+            if (merged.size() == 0 || merged.get(merged.size() - 1)[1] < intervals[i][0]) {
+                merged.add(new int[]{intervals[i][0], intervals[i][1]});
+            }
+            if (merged.get(merged.size() - 1)[1] >= intervals[i][0]) {
+                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], intervals[i][1]);
             }
         }
 
-        return ans.toArray(new int[ans.size()][2]);
+        return merged.toArray(new int[merged.size()][]);
     }
 }
 

@@ -22,8 +22,8 @@ public class CombinationSum39 {
 
     @Test
     public void test01(){
-        int[] arr = {2,3,6,7};
-        combinationSum1(arr, 7);
+        int[] arr = {2,4};
+        combinationSum(arr, 8);
     }
 
     public List<List<Integer>> combinationSum1(int[] candidates, int target) {
@@ -65,7 +65,7 @@ public class CombinationSum39 {
         // 排序是为了提前终止搜索
         Arrays.sort(candidates);
 
-        dfs(candidates, len, target, 0, new ArrayDeque<>(), res);
+        dfs1(candidates, len, target, 0, new ArrayDeque<>(), res);
         return res;
     }
 
@@ -118,10 +118,12 @@ public class CombinationSum39 {
             return;
         }
 
-        dfs1(candidates, len, residue, begin + 1, path, res);
+
 
         path.add(candidates[begin]);
         dfs1(candidates, len, residue - candidates[begin], begin, path, res);
         path.removeLast();
+
+        dfs1(candidates, len, residue, begin + 1, path, res);
     }
 }

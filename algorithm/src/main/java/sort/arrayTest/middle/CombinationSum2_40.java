@@ -50,7 +50,7 @@ public class CombinationSum2_40 {
 
         int most = Math.min(rest / freq.get(pos)[0], freq.get(pos)[1]);
 
-        for (int i = 0; i <= most; i++) {
+        for (int i = 1; i <= most; i++) {
             sequence.add(freq.get(pos)[0]);
             dfs(pos + 1, rest - i * freq.get(pos)[0]);
         }
@@ -80,20 +80,24 @@ public class CombinationSum2_40 {
             ans.add(new ArrayList<>(sequence));
             return;
         }
-        if (pos == freq.size() || rest < freq.get(pos)[0]) {
+
+        if (pos == freq.size() ||freq.get(pos)[0] > rest) {
             return;
         }
+
         dfs1(pos + 1, rest);
 
-        int most = Math.min( rest / freq.get(pos)[0], freq.get(pos)[1]);
-        for (int i = 0; i <= most; i++) {
+        int min = Math.min(rest / freq.get(pos)[0], freq.get(pos)[1]);
+
+        for (int i = 1; i <= min; i++) {
             sequence.add(freq.get(pos)[0]);
-            dfs(pos + 1, rest - i * freq.get(pos)[0]);
+            dfs1(pos, rest - freq.get(pos)[0]);
         }
 
-        for (int i = 1; i <= most; i++) {
+        for (int i = 1; i <= min; i++) {
             sequence.remove(sequence.size() - 1);
         }
+
     }
 
 }
