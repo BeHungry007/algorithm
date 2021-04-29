@@ -12,84 +12,35 @@ public class FindKthLargest215 {
 
     Random random = new Random();
 
-    public int findKthLargest1(int[] nums, int k) {
-        return quickSelect1(nums, 0, nums.length - 1, nums.length - k);
-    }
-
-    public int quickSelect1(int[] a, int l, int r, int index) {
-        int q = randomPartition1(a, l, r);
-        if (q == index) {
-            return a[q];
-        } else {
-            return q < index ? quickSelect1(a, q + 1, r, index) : quickSelect1(a, l, q - 1, index);
-        }
-    }
-
-    public int randomPartition1(int[] a, int l, int r) {
-        int i = random.nextInt(r - l + 1) + l;
-        swap(a, i, r);
-        return partition1(a, l, r);
-    }
-
-    public int partition1(int[] a, int l, int r) {
-        int x = a[r], i = l - 1;
-        for (int j = l; j < r; ++j) {
-            if (a[j] <= x) {
-                swap(a, ++i, j);
-            }
-        }
-        swap(a, i + 1, r);
-        return i + 1;
-    }
-
-
-    @Test
-    public void test01(){
-        int[] nums = {3,2,3,1,2,4,5,5,6};
-        int k = 2;
-        findKthLargest(nums, 4);
-    }
-
     public int findKthLargest(int[] nums, int k) {
-
-        Arrays.sort(nums);
-        int count = 0;
-        for (int i = nums.length - 1; i >= 0; i--) {
-            count++;
-            if (count == k) {
-                return nums[i];
-            }
-        }
-        return -1;
-
+        return quickSelect(nums, 0, nums.length - 1, k);
     }
 
-    public int quickSelect(int[] nums, int l, int r, int index) {
+    private int quickSelect(int[] nums, int l, int r, int target) {
         int i = randomPartition(nums, l, r);
-
-        if (i == index) {
-            return nums[i];
+        if (i == target) {
+            return i;
         } else {
-            return i < index ? quickSelect(nums,i + 1, r, index) : quickSelect(nums, l, i - 1, index);
+            return i < target ? randomPartition(nums, i + 1, r) : randomPartition(nums, l, i - 1);
         }
     }
 
-    public int randomPartition(int[] nums, int left, int right) {
-        int i = random.nextInt(right - left + 1) + left;
-        swap(nums, i, right);
-        return partition(nums, left, right);
-
+    private int randomPartition(int[] nums, int l, int r) {
+        int i = random.nextInt(r - l + 1) + l;
+        swap(nums, i , r);
+        return partition(nums, i, r);
 
     }
 
-    public int partition(int[] nums, int left, int right) {
-        int m = nums[right], n = left - 1;
-        for(int i = left; i < right; ++i) {
+    private int partition(int[] nums, int l, int r) {
+        int m = nums[r], n = l - 1;
+        for (int i = l; i < r; i++) {
             if (nums[i] <= m) {
-                swap(nums, ++n, i);
+                n++;
+                swap(nums, n, i);
             }
         }
-        swap(nums,n + 1, m);
+        swap(nums, n + 1, r);
         return n + 1;
     }
 
