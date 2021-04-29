@@ -14,10 +14,10 @@ public class Demo017 {
 
     @Test
     public void test01(){
-
+        System.out.println("aa");
     }
 
-    Map<String, String> phone = new HashMap<>() {
+    Map<String, String> phone = new HashMap<String, String>() {
         {
             put("2", "abc");
             put("3", "def");
