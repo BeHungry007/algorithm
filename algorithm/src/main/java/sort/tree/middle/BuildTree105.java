@@ -25,6 +25,20 @@ public class BuildTree105 {
 
     private TreeNode myBuildTree(int[] preorder, int[] inorder, int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
 
+        if (preorderLeft > preorderRight) {
+            return null;
+        }
 
+        int preorderRoot = preorderLeft;
+
+        int inorderRoot = indexMap.get((preorder[preorderRoot]));
+
+        TreeNode root = new TreeNode(preorder[preorderRoot]);
+
+        int sizeLeftSubtree = inorderRoot - inorderLeft;
+
+        root.left = myBuildTree(preorder, inorder, preorderLeft + 1, preorderLeft + sizeLeftSubtree, inorderLeft, inorderRoot - 1);
+        root.right = myBuildTree(preorder, inorder, preorderLeft + sizeLeftSubtree + 1,preorderRight, inorderRoot + 1, inorderRight);
+        return root;
     }
 }
