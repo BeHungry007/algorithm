@@ -31,7 +31,11 @@ public class KSmallestPairs373 {
         System.out.println(queue);
         queue.add(9);
         System.out.println(queue);
-        System.out.println(queue.peek());
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
 
     }
 
