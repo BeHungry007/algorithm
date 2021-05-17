@@ -38,7 +38,7 @@ public class SearchMatrix74 {
                 {10, 11, 16, 20},
                 {23, 30, 34, 60}
         };
-        searchMatrix1(matrix, 13);
+        searchMatrix1(matrix, 3);
 
     }
 
@@ -54,7 +54,7 @@ public class SearchMatrix74 {
             } else if (ans < target) {
                 left = tmp + 1;
             } else {
-                right = tmp - 1;
+                right = tmp;
             }
         }
         return false;
