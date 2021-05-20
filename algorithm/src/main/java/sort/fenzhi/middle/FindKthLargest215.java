@@ -2,8 +2,7 @@ package sort.fenzhi.middle;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
@@ -49,5 +48,22 @@ public class FindKthLargest215 {
         int temp = a[i];
         a[i] = a[j];
         a[j] = temp;
+    }
+
+    public int findKthLargest1(int[] nums, int k) {
+        Queue<Integer> queue = new PriorityQueue<Integer>(k, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
+        for (int i = 0; i < nums.length; i++) {
+            if (i < k) {
+                queue.offer(nums[i]);
+            } else {
+                queue.offer(Math.max(queue.poll(), nums[i]));
+            }
+        }
+        return queue.poll();
     }
 }

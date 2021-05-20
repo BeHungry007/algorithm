@@ -20,7 +20,6 @@ public class GenerateTrees95 {
             allTrees.add(null);
             return allTrees;
         }
-
         // 枚举可行根节点
         for (int i = start; i <= end; i++) {
             // 获得所有可行的左子树集合
