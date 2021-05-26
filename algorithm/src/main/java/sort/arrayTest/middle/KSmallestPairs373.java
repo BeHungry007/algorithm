@@ -62,7 +62,7 @@ public class KSmallestPairs373 {
         // 最后将元素弹出，倒序插入数组即可
         List<List<Integer>> res = new LinkedList<>();
         for(int i =0; i < k && !queue.isEmpty(); i++){
-            res.add(0, queue.poll());
+            res.add(queue.poll());
         }
         return res;
     }

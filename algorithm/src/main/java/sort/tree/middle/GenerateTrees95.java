@@ -5,6 +5,9 @@ import utils.TreeNode;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 不同的二叉搜索树2
+ */
 public class GenerateTrees95 {
 
     public List<TreeNode> generateTrees1(int n) {
