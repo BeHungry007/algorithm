@@ -55,14 +55,13 @@ public class Merge56 {
         });
         List<int[]> merged = new ArrayList<int[]>();
         for (int i = 0; i < intervals.length; i++) {
-            if (merged.size() == 0 || merged.get(merged.size() - 1)[1] < intervals[i][0]) {
-                merged.add(new int[]{intervals[i][0], intervals[i][1]});
-            }
-            if (merged.get(merged.size() - 1)[1] >= intervals[i][0]) {
-                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], intervals[i][1]);
+            int left = intervals[i][0], right = intervals[i][1];
+            if (i == 0 || merged.get(merged.size() - 1)[1] < left) {
+                merged.add(new int[]{left, right});
+            } else {
+                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], right);
             }
         }
-
         return merged.toArray(new int[merged.size()][]);
     }
 }

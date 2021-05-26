@@ -5,6 +5,9 @@ import utils.TreeNode;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 不同的二叉搜索树2
+ */
 public class GenerateTrees95 {
 
     public List<TreeNode> generateTrees1(int n) {
@@ -20,7 +23,6 @@ public class GenerateTrees95 {
             allTrees.add(null);
             return allTrees;
         }
-
         // 枚举可行根节点
         for (int i = start; i <= end; i++) {
             // 获得所有可行的左子树集合

@@ -12,20 +12,18 @@ import org.junit.Test;
 public class SearchMatrix74 {
 
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix.length == 0) return false;
-
         int m = matrix.length;
         int n = matrix[0].length;
-        int l = 0, r = m * n - 1;
-        while (l < r) {
-            int tmp = (l + r) / 2;
+        int left = 0, right = m * n - 1;
+        while ( left <= right) {
+            int tmp = (left + right) / 2;
             int ans = matrix[tmp / n][tmp % n];
             if (ans == target) {
                 return true;
-            } else if (ans > target) {
-                r = tmp;
+            } else if (ans < target) {
+                left = tmp + 1;
             } else {
-                l = tmp;
+                right = tmp - 1;
             }
         }
         return false;
@@ -54,14 +52,14 @@ public class SearchMatrix74 {
             } else if (ans < target) {
                 left = tmp + 1;
             } else {
-                right = tmp - 1;
+                right = tmp;
             }
         }
         return false;
     }
 
     public static void main(String[] args) {
-        int target = 3;
+        int target = 13;
         int[][] matrix = new int[][]{
                 {1,  3,  5,  7},
                 {10, 11, 16, 20},

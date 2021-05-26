@@ -7,6 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * 从上往下打印二叉树的节点
+ */
 public class LevelOrder32offer {
 
 

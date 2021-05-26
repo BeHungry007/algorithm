@@ -52,18 +52,15 @@ public class Search33 {
         return -1;
 
     }
+
     public int search1(int[] nums, int target) {
-        int idx = -1;
         int left = 0;
         int right = nums.length - 1;
-        int tmp = 0;
         while (left < right) {
-            tmp = (left + right) / 2;
-            if(nums[tmp] == target) return tmp;
-
+            int tmp = (left + right) / 2;
             if (nums[0] <= nums[tmp]) {
-                if (nums[0] <= target && target < nums[tmp]) {
-                    right = tmp - 1;
+                if (nums[0] <= target && target <= nums[tmp]) {
+                    right = tmp;
                 } else {
                     left = tmp + 1;
                 }
@@ -71,41 +68,10 @@ public class Search33 {
                 if (nums[tmp] < target && target <= nums[nums.length - 1]) {
                     left = tmp + 1;
                 } else {
-                    right = tmp - 1;
+                    right = tmp;
                 }
             }
         }
-        return idx;
+        return -1;
     }
-
-    public int search2(int[] nums, int target) {
-
-        int idx = -1;
-        int left = 0;
-        int right = nums.length - 1;
-        int tmp = 0;
-        while (left < right) {
-            tmp = (left + right) / 2;
-            if(nums[tmp] == target) return tmp;
-
-            if (nums[0] <= nums[tmp]) {
-                if (nums[0] <= target && target < nums[tmp]) {
-                    right = tmp - 1;
-                } else {
-                    left = tmp + 1;
-                }
-            } else {
-                if (nums[tmp] < target && target <= nums[nums.length - 1]) {
-                    left = tmp + 1;
-                } else {
-                    right = tmp - 1;
-                }
-            }
-        }
-        return idx;
-
-
-    }
-
-
 }
