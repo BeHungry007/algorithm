@@ -35,4 +35,28 @@ public class LevelOrder32offer {
         return res;
     }
 
+    public List<List<Integer>> levelOrderII(TreeNode root) {
+        if (root == null) return new ArrayList<>();
+        Queue<TreeNode> list = new LinkedList<>(){{add(root);}};
+        ArrayList<List<Integer>> ans = new ArrayList<>();
+        while (!list.isEmpty()) {
+            int count = list.size();
+            List<Integer> arr = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                TreeNode node = list.poll();
+                arr.add(node.val);
+                if (node.left != null) {
+                    list.add(node.left);
+                }
+                if (node.right != null) {
+                    list.add(node.right);
+                }
+            }
+            ans.add(arr);
+        }
+
+
+        return ans;
+    }
+
 }
