@@ -11,6 +11,7 @@ import org.junit.Test;
  */
 public class SearchMatrix74 {
 
+    //正确答案！
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;
         int n = matrix[0].length;

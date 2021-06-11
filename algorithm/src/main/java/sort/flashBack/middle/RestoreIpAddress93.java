@@ -26,7 +26,7 @@ public class RestoreIpAddress93 {
     public void dfs(String s, int segId, int segStart) {
         if (segId == SEG_COUNT) {
             if (segStart == s.length()) {
-                StringBuffer ipAddr = new StringBuffer();
+                StringBuilder ipAddr = new StringBuilder();
                 for (int i = 0; i < SEG_COUNT; i++) {
                     ipAddr.append(segments[i]);
                     if (i != SEG_COUNT - 1) {
@@ -62,7 +62,7 @@ public class RestoreIpAddress93 {
     public void dfs1(String s, int segId, int segStart) {
         if (segId == SEG_COUNT) {
             if (segStart == s.length()) {
-                StringBuffer ipAddr = new StringBuffer();
+                StringBuilder ipAddr = new StringBuilder();
                 for (int i = 0; i < SEG_COUNT; i++) {
                     ipAddr.append(segments[i]);
                     if (i != SEG_COUNT - 1) {
