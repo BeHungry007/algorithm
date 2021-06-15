@@ -1,5 +1,7 @@
 package utils;
 
+import org.junit.Test;
+
 public class ListNode {
     public int val;
     public ListNode pre;

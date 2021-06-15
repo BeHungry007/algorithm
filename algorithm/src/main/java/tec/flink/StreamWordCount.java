@@ -3,6 +3,7 @@ package tec.flink;
 import com.google.gson.JsonObject;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
