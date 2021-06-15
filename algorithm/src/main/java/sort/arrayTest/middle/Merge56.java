@@ -35,34 +35,40 @@ public class Merge56 {
         return merged.toArray(new int[merged.size()][]);
     }
 
-    @Test
-    public void test01(){
-        int[][] ints = new int[][]{
-                {1, 2},
-                {3, 4},
-                {5, 6}
-        };
-        System.out.println();
-        System.out.println("s");
-    }
-
     public int[][] merge1(int[][] intervals) {
+        if (intervals.length == 0) {
+            return new int[0][2];
+        }
+
         Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
                 return o1[0] - o2[0];
             }
         });
+
         List<int[]> merged = new ArrayList<int[]>();
         for (int i = 0; i < intervals.length; i++) {
-            int left = intervals[i][0], right = intervals[i][1];
-            if (i == 0 || merged.get(merged.size() - 1)[1] < left) {
-                merged.add(new int[]{left, right});
+            if (i == 0 || (i > 0 && merged.get(merged.size() - 1)[1] < intervals[i][0])) {
+                merged.add(intervals[i]);
             } else {
-                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], right);
+                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], intervals[i][1]);
             }
         }
         return merged.toArray(new int[merged.size()][]);
     }
+
+    @Test
+    public void test0(){
+        int[][] ans = {{1,2},{3,4},{5,6}};
+        List<int[]> merged = new ArrayList<int[]>();
+        merged.add(ans[0]);
+        for (int[] ints : merged) {
+            System.out.println(ints.length);
+        }
+        System.out.println(merged.toArray(new int[merged.size()][]));
+    }
+
+
 }
 

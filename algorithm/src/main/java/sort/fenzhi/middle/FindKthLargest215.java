@@ -66,4 +66,27 @@ public class FindKthLargest215 {
         }
         return queue.poll();
     }
+
+    @Test
+    public void test01(){
+        int k = 2;
+        int[] nums = {5,4,6,3,7,2,8};
+        Queue<Integer> queue = new PriorityQueue<Integer>(k, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
+        for (int i = 0; i < nums.length; i++) {
+            if (i < k) {
+                queue.offer(nums[i]);
+            } else {
+                queue.offer(Math.max(queue.poll(), nums[i]));
+            }
+        }
+        System.out.println(queue.peek()); //7
+        System.out.println(queue);        //[7,8]
+        System.out.println(queue.poll()); //7
+        System.out.println(queue);        //[8]
+    }
 }

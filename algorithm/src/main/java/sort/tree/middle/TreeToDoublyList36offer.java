@@ -2,6 +2,9 @@ package sort.tree.middle;
 
 import utils.Node;
 
+/**
+ * 二叉搜索树转换成排序的双向链表
+ */
 public class TreeToDoublyList36offer {
 
     Node pre, head;
