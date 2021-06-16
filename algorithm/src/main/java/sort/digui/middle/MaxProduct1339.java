@@ -8,7 +8,7 @@ import utils.TreeNode;
  * 由于答案可能会很大，请你将结果对 10^9 + 7 取模后再返回。
  *
  */
-public class MaxProduct {
+public class MaxProduct1339 {
 
     double ans = Double.MIN_VALUE;
     double allSum;

@@ -55,5 +55,4 @@ public class RemoveCoveredIntervals1288 {
         }
         return count;
     }
-
 }
