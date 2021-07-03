@@ -11,6 +11,17 @@ import utils.ListNode;
  */
 public class DeleteDuplicates82 {
 
+    /**
+     * 题解：
+     *      1. 新建一个链表dummy，其next指向head；此时新建一个链表指向cur；
+     *      2. 对cur进行操作，想判定数字是否重复，需要确定cur.next和cur.next.next不为null。
+     *      3. 当不为null的时候，判定两者的value是否相等？
+     *                           如果相等，记录下来x，while循环删除cur.next，一直找到cur.next.value ！= x || cur.next != null,
+     *                           如果不相等，cur = cur.next;
+     *      4. return dummy.next;
+     * @param head
+     * @return
+     */
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null) {
             return head;

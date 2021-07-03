@@ -20,13 +20,19 @@ import java.util.Stack;
  */
 public class MinRemoveToMakeValid1249 {
 
-    @Test
-    public void test01(){
-        String s = "lee(t(c)o)de)";
-        minRemoveToMakeValid1(s);
-
-    }
-
+    /**
+     * 题解：  需要将全部的'('位置存储下来，而每次遇到')'的时候，都要获取到最新位置的'(',并将两者配对。
+     *      1. 先构建一个len=s.length()长度的布尔数组invalidIndex，默认值为false。invalidIndex[i]为true，表示该位置需要删除。
+     *      2. 使用先进后出的栈stack来存储'('的位置，每次poll出最新的位置；
+     *      3. 遍历字符串，此时位置为i,
+     *          当遍历到'('的时候，需要stack.push(i)，并且invalidIndex[i]=true;
+     *          当遍历到')'的时候，
+     *              需要弹出'('最新的位置：index = stack.poll()，并且将invalidIndex[i]和并invalidIndex[index]置为false
+     *              如果stack为空，则该位置不能配对，需要invalidIndex[i]=true;
+     *      4. 遍历invalidIndex，将invalidIndex[i]为true的s相同位置的字符删除。
+     * @param s
+     * @return
+     */
     public String minRemoveToMakeValid(String s) {
         Stack<Integer> bracketIndex = new Stack<>();
         boolean[] invalidIndex = new boolean[s.length()];

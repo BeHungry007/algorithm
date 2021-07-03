@@ -4,11 +4,23 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
+/**
+ * 最大交换
+ */
 public class Demo670 {
+
     @Test
     public void test01(){
         maximumSwap(9973);
     }
+
+    /**
+     * 题解：
+     *      1. 将0 - 9每个数字出现的最大位数记录到arr数组中,arr数组的index为数字，value为所在最大位置；
+     *      2.  遍历num的字符串，只需要满足i.index < index && i.value < value即为所求值
+     * @param num
+     * @return
+     */
     public int maximumSwap(int num) {
         char[] A = Integer.toString(num).toCharArray();
         String s = "" + num;
@@ -28,13 +40,6 @@ public class Demo670 {
             }
         }
         return num;
-    }
-
-    @Test
-    public void test02(){
-        String s = "12345678";
-        String substring = s.substring(1, 2);
-        System.out.println(substring);
     }
 
 }

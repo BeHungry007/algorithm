@@ -24,6 +24,8 @@ public class AddTwoNumbers2 {
         ListNode l2 = new ListNode(5);
         ListNode listNode = addTwoNumbers(l2, l1);
     }
+
+
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode dummyHead = new ListNode(0);
         ListNode p = l1, q = l2, curr = dummyHead;

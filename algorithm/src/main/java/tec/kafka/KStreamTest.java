@@ -96,6 +96,7 @@ public class KStreamTest  implements Runnable{
                 .peek((key, value) -> {
                     if ("90000".equals(key))
                         System.out.println(value);
+                    value = value.get("after").getAsJsonObject();
                     KStreamTest.countEDataMp.getAndIncrement();
                     System.out.println("collObj: " + KStreamTest.countEDataMp);
                 }).toTable();

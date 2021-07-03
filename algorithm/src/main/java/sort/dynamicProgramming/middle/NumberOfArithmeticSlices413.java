@@ -13,6 +13,19 @@ package sort.dynamicProgramming.middle;
  */
 public class NumberOfArithmeticSlices413 {
 
+    /**
+     * 题解：  子数组为连续，满足条件最低的个数为3！
+     *      1. 遍历数组，因为最低数量为3，所以从index=2开始遍历（index的位置为Q的位置）
+     *      2. 设置dp = 0, sum = 0;
+     *      3. 当满足A[index]-A[index-1]==A[index-1]-A[index-2]的时候，
+     *          dp加一，sum加dp;（dp可以理解为[q,Q-2]位置参数的数量）
+     *              ps:0,2,3,4,5,6   当index为5的时候，dp的数值大小为[2,3]的数量。
+     *                               不包括0的位置是因为公差变化，需要固定公差大小。
+     *      4. 当不满足条件的时候（即此时公差发生变化，dp需要置为0
+     *
+     * @param A
+     * @return
+     */
     public int numberOfArithmeticSlices(int[] A) {
         int dp = 0;
         int sum = 0;

@@ -11,8 +11,9 @@ public class SingleNumber260 {
 
     @Test
     public void test01(){
-        int a = 4;
-        System.out.println(a ^= 2);
+        int a = 1;
+        int b = 3;
+        System.out.println(a & 8);
     }
 
     public int[] singleNumber(int[] nums) {

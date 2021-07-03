@@ -28,13 +28,13 @@ public class PickIndex528 {
 
     public int pickIndex() {
         int targ = rand.nextInt(sum);
-        int lo = 0;
-        int hi = psum.size() - 1;
-        while (lo != hi) {
-            int mid = (lo + hi) / 2;
-            if (targ >= psum.get(mid)) lo = mid + 1;
-            else hi = mid;
+        int left = 0;
+        int right = psum.size() - 1;
+        while (left != right) {
+            int mid = (left + right) / 2;
+            if (targ >= psum.get(mid)) left = mid + 1;
+            else right = mid;
         }
-        return lo;
+        return left;
     }
 }

@@ -15,14 +15,19 @@ public class ESClient {
         if (highClient == null) {
             synchronized (ESClient.class) {
                 if (highClient == null) {
-                    HttpHost host = new HttpHost("192.168.9.217", 9200, "http");
-                    RestClient.builder(host).setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
+//                    HttpHost host = new HttpHost("192.168.13.132", 9200, "http");
+
+                    HttpHost host = new HttpHost("192.168.13.132", 9200, "http");
+                    RestClientBuilder builder = RestClient.builder(host).setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
                         @Override
                         public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder builder) {
                             builder.setSocketTimeout(30000 * 4);
                             return builder;
                         }
                     });
+                    builder.build();
+                    highClient = new RestHighLevelClient(builder);
+
                 }
             }
         }
