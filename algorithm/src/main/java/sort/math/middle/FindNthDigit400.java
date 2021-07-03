@@ -20,7 +20,9 @@ public class FindNthDigit400 {
             start *= 10;
             count = digit * start * 9;
         }
-        long num = start + (n - 1) / digit; // 2.
-        return Long.toString(num).charAt((n - 1) % digit) - '0'; // 3.
+        // 2. 此处减1，为防止溢出：当n位于14的4位置时，若不减1则会算成15。
+        long num = start + (n - 1) / digit;
+        // 3. 此处减1，为减去0所在的位置;
+        return Long.toString(num).charAt((n - 1) % digit) - '0';
     }
 }

@@ -17,7 +17,7 @@ public class Demo017 {
 
     }
 
-    Map<String, String> phone = new HashMap<>() {
+    Map<String, String> phone = new HashMap<String, String>() {
         {
             put("2", "abc");
             put("3", "def");

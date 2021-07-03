@@ -20,17 +20,17 @@ import java.io.IOException;
 
 public class Test11 {
     public static void main(String[] args) throws IOException {
-        Test11 t = new Test11();
-        RestHighLevelClient host = t.getHost();
-        Request request = new Request("GET", "/_cat/indices");
-        Response response = host.getLowLevelClient().performRequest(request);
-        HttpEntity entity = response.getEntity();
-        byte[] bytes = entity.getContent().readAllBytes();
-        String content = new String(bytes, "utf-8");
-        String[] indices = content.split("\n");
-        for (String index : indices) {
-            System.out.println(index);
-        }
+//        Test11 t = new Test11();
+//        RestHighLevelClient host = t.getHost();
+//        Request request = new Request("GET", "/_cat/indices");
+//        Response response = host.getLowLevelClient().performRequest(request);
+//        HttpEntity entity = response.getEntity();
+//        byte[] bytes = entity.getContent().readAllBytes();
+//        String content = new String(bytes, "utf-8");
+//        String[] indices = content.split("\n");
+//        for (String index : indices) {
+//            System.out.println(index);
+//        }
 //        SearchRequest searchRequest = t.getRequest("logstash-v5.0-2021-1");
 //        Request request = new Request("GET", "/_cat/indices");
 //        SearchResponse search = host.search(searchRequest, RequestOptions.DEFAULT);

@@ -23,8 +23,10 @@ public class Partitionertest {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         // 6 设置输入和输出路径
-        FileInputFormat.setInputPaths(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileInputFormat.setInputPaths(job, new Path("D:\\input\\inputflow"));
+        FileOutputFormat.setOutputPath(job, new Path("D:\\input\\output1"));
+//        FileInputFormat.setInputPaths(job, new Path(args[0]));
+//        FileOutputFormat.setOutputPath(job, new Path(args[1]));
         // 7 提交 job
         boolean result = job.waitForCompletion(true);
         System.exit(result ? 0 : 1);

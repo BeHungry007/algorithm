@@ -15,21 +15,19 @@ public class Partition86 {
         ListNode lessHead = new ListNode(0);
         ListNode moreHead = new ListNode(0);
 
-        if(head == null)        return null;
+        if(head == null) {
+            return null;
+        }
         ListNode cur = head;
         ListNode curLess = lessHead;
         ListNode curMore = moreHead;
 
-        while(cur != null)
-        {
-            if(cur.val < x)
-            {
+        while(cur != null) {
+            if(cur.val < x) {
                 curLess.next = new ListNode(cur.val);
                 curLess = curLess.next;
                 cur = cur.next;
-            }
-            else
-            {
+            } else {
                 curMore.next = new ListNode(cur.val);
                 curMore = curMore.next;
                 cur = cur.next;

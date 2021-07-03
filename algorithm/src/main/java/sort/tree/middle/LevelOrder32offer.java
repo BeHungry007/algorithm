@@ -15,7 +15,8 @@ public class LevelOrder32offer {
 
     public int[] levelOrder(TreeNode root) {
         if (root == null) return new int[0];
-        Queue<TreeNode> list = new LinkedList<>(){{add(root);}};
+        Queue<TreeNode> list = new LinkedList<>();
+        list.add(root);
         ArrayList<Integer> ans = new ArrayList<>();
         while (!list.isEmpty()) {
             TreeNode node = list.poll();
@@ -37,7 +38,8 @@ public class LevelOrder32offer {
 
     public List<List<Integer>> levelOrderII(TreeNode root) {
         if (root == null) return new ArrayList<>();
-        Queue<TreeNode> list = new LinkedList<>(){{add(root);}};
+        Queue<TreeNode> list = new LinkedList<>();
+        list.add(root);
         ArrayList<List<Integer>> ans = new ArrayList<>();
         while (!list.isEmpty()) {
             int count = list.size();

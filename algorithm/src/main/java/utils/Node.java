@@ -1,6 +1,6 @@
 package utils;
 
-public class Node {
+public class Node implements Cloneable{
     public int val;
     public Node left;
     public Node right;
