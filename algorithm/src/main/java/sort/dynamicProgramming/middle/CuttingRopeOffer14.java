@@ -19,19 +19,14 @@ public class CuttingRopeOffer14 {
             return 2;
         }
         int[] dp = new int[n+1];
-        dp[0] = 0;
         dp[1] = 1;
         dp[2] = 2;
         dp[3] = 3;
-        int max = 0;
-        for(int i = 4; i <= n; i++) {
-            max = 0;
-            for(int j = 1; j < i;j++){
-                if(dp[i-j] * dp[j] > max){
-                    max = dp[i-j] * dp[j];
-                }
+        for(int len = 4;len <= n; len++){
+            //到len位置，遍历(len - k) * k所有可能，然后获取到最大值
+            for(int k = 2; k < len-1; k++){
+                dp[len] = Math.max(dp[len], dp[k] * dp[len-k]);
             }
-            dp[i] = max;
         }
         return dp[n];
     }
