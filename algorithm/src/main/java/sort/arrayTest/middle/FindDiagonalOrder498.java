@@ -48,7 +48,7 @@ public class FindDiagonalOrder498 {
             }
 
             for (int j = 0; j < intermediate.size(); j++) {
-                result[k++] = intermediate.get(sum);
+                result[k++] = intermediate.get(j);
             }
         }
         return result;
