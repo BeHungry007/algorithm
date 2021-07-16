@@ -1,0 +1,261 @@
+import argparse
+import json
+import time
+
+import requests
+from elasticsearch import Elasticsearch
+def parser_arg(namespace=None):
+    _parser = argparse.ArgumentParser(description='Knowledge repo collect func.')
+    _parser.add_argument('-s', '--source_ip', type=str, default='localhost',help='source ES address. Default: localhost')
+    _parser.add_argument('-d', '--dest_ip', type=str, default='localhost',
+                         help='dest ES address. Default: localhost')
+    _parser.add_argument('-c', '--classify', type=str, default='no',
+                         help='index classification. Default: no')
+    _parser.add_argument('-m', '--merge_data', type=str, default='False', help='data is merged. Default: False')
+    return _parser.parse_args(namespace=namespace)
+
+
+class EsReindex(object):
+    def __init__(self, source_ip="localhost", dest_ip="localhost", classify = "no", merge_data='False'):
+        self.source = source_ip + ":9200"
+        self.dest = dest_ip + ":9200"
+        self.classify = classify
+        self.maxsize = 30 * 1024 * 1024 * 1024
+        self.success_indexs = []
+        self.error_indexs = []
+        self.es = Elasticsearch([self.source])
+        self.es_dest = Elasticsearch([self.dest])
+        self.headers = {"Content-Type": "application/json"}
+        self.s = requests.session()
+        self.s.keep_alive = False
+        if 'False' in merge_data:
+            self.merge = False
+        elif 'True' in merge_data:
+            self.merge = True
+        else:
+            print("传参错误")
+            return
+        print("reindex的source是" + self.source + ",dest是" + self.dest)
+
+    def main(self):
+        indexs_dest = self.get_all_index()
+        indexs = self.get_reindex_after_index()
+
+        try:
+            print("全部的index is " + str(indexs))
+            for index in indexs:
+                merge_index = index[0:-6]
+                print("遍历 index is " + index)
+                idx_num = 0
+                li = self.accord_index_get_index(merge_index, idx_num)
+                print("根据index,获取到所有合并到该index的集合 或者 该index自身 li is " + str(li))
+                idx_dest = index
+                for idx in li:
+                    idx = str(idx)
+                    print("遍历 li is " + idx)
+                    if ".kibana" in idx:
+                        continue
+                    print(idx)
+                    count, size, isSuc = self.get_size_count(self.source, idx)
+                    print(idx + "的size为" + str(size) + ", count为" + str(count) + ",isSuc is " + str(isSuc))
+                    #lasttime = int(time.time())
+                    if not isSuc:
+                        self.error_indexs.append(idx)
+                        continue
+                    elif isSuc and count == 0:
+                        self.success_indexs.append(idx)
+                        continue
+
+                    # 合并的情况下，es的分片数据设定为30G
+                    # if size >= self.maxsize or size + sizes >= self.maxsize:
+                    #     idx_num = idx_num + 1
+                    #     idx_dest = index + "-" + idx_num
+
+                    if not self.merge:
+                        idx_dest = idx
+                    lasttime = int(time.time())
+                    print(type(indexs_dest))
+                    print(type(idx_dest))
+                    if idx_dest in indexs_dest:
+                        pass
+                    else:
+                        isExist = self.create_index_mapping(idx_dest)
+                        if not isExist:
+                            self.error_indexs.append(idx)
+                            continue
+                    if self.merge and idx == idx_dest:
+                        self.success_indexs.append(idx)
+                        continue
+                    #count_before, size_before, isSuc = self.get_size_count(self.dest, idx_dest)
+                    body = {"source": {"remote": {"host": "http://" + self.source}, "index": str(idx), "size": 10000,
+                                       "query": {"match_all": {}}}, "dest": {"index": str(idx_dest)},
+                            "script": {"source": "if (ctx._id.length() > 512) {ctx._id = 'null'}", "lang": "painless"}}
+                    try:
+                        url = "http://" + self.dest + "/_reindex?wait_for_completion=true&pretty=true"
+                        res = self.s.post(url, data=json.dumps(body), headers=self.headers, timeout= count / 1000 if (count / 1000 > 60) else 60)
+                        print(res.status_code)
+                        if 200==res.status_code:
+                            if self.merge:
+                                isClose = self.close_index(idx)
+                            else:
+                                isClose = True
+                        else:
+                            isClose =False
+                        print(isClose)
+                        if isClose:
+                            self.success_indexs.append(idx)
+                        else:
+                            self.error_indexs.append(idx)
+                    except Exception as e:
+                        print("reindex err, err is " + str(e))
+                        self.error_indexs.append(idx)
+                    res.close()
+                    nowtime = int(time.time())
+                    print("index的速度为" + str(count / (nowtime - lasttime + 1)))
+                    print("时间差为" + str(nowtime - lasttime))
+
+
+        except Exception as e:
+            print(str(e))
+        print("合并成功的index：" + str(self.success_indexs))
+        print("合并失败的index：" + str(self.error_indexs))
+
+    def create_index_mapping(self, index):
+        print("create index is " + str(index))
+        try:
+            body = {"settings": {"number_of_replicas": 1, "number_of_shards": 2}, "mappings": { "doc": {
+                "dynamic_templates": [{"keyin": {"match": "KEYIN", "match_mapping_type": "string",
+                                                 "mapping": {"type": "text",
+                                                             "fields": {
+                                                                 "raw": {"type": "keyword", "ignore_above": 8192}}
+                                                             }}}, {"string_fields": {"match": "*", "unmatch": "KEYIN",
+                                                                                     "match_mapping_type": "string",
+                                                                                     "mapping": {"type": "text",
+                                                                                                 "fields": {
+                                                                                                     "raw": {
+                                                                                                         "type": "keyword",
+                                                                                                         "ignore_above": 256}}}}}],
+                "properties": {"@version": {"type": "keyword"},
+                               "geoip": {"type": "object", "dynamic": True, "properties": {
+                                   "location": {"type": "geo_point"}}}}}}}
+            url = "http://" + self.dest + "/" + index
+            r = self.s.put(url, data=json.dumps(body), headers=self.headers, timeout=60)
+            status_info = r.json()
+            ans = status_info.get("acknowledged")
+            print(status_info)
+        except Exception as e:
+            print("创建index mapping报错，err is " + str(e))
+            return False
+        r.close()
+        return True
+
+    def get_all_index(self):
+        li = []
+        result = self.es_dest.indices.get_alias("*",expand_wildcards="open").keys()
+        li = list(result)
+        print("dest ip indexs is " + str(li))
+        return li
+
+    def close_index(self, idx):
+        print("close index is " + str(idx))
+        url = "http://" + self.source + "/" + idx + "/_close"
+        try:
+            r = self.s.post(url, headers=self.headers, timeout=60)
+            r.close()
+            return True
+        except RuntimeError as e:
+            r.close()
+            print(str(e))
+            print("关闭index 失败，index是 " + idx)
+            return False
+
+    def get_red_index(self,index):
+
+        try:
+            r = self.es.cat.indices(index=index,params={"request_timeout":60})
+            if "red" in r:
+                return True
+        except RuntimeError as e:
+            print(str(e))
+        return False
+    #根据某一个合并之后的index,获取到所有需要合并到该index的index
+    def accord_index_get_index(self, index, idx_num):
+        is_include = False
+        li = []
+        if "no" in self.classify:
+            li.append(index)
+            li.sort()
+            return li
+        result = self.es.indices.get_alias(index + "*",expand_wildcards="open").keys()
+        li = list(result)
+        red_status = self.get_red_index(index)
+        if not red_status:
+            li.remove(index)
+        if "year" in self.classify:
+            idx_dest = index + "-" + str(idx_num)
+        elif "month" in self.classify:
+            idx_dest = index
+        li.sort()
+        return li
+
+    #获取所有合并之后的index
+    def get_reindex_after_index(self):
+        # 该参数用于截取es的index
+        es_index_intercept_num = 4
+        try:
+            state = self.es.indices.get_alias("*",expand_wildcards="open").keys()
+            result = list(state)
+            result.sort()
+            indexs = []
+            indexs_other = []
+        except Exception as e:
+            print("34获取所有的index报错，err is " + str(e))
+        if "month" in self.classify:
+            es_index_intercept_num = 7
+
+        for index1 in result:
+            index = str(index1)
+            if "no" in self.classify:
+                indexs.append(index)
+                continue
+            try:
+                if index.startswith("logstash-v5.0-") or index.startswith("bitguard-v5.0-20") or index.startswith(
+                        "bitguard-sensor-userinput-v5.0-20"):
+                    num = index.find("20")
+                    aa = index[0:num + es_index_intercept_num]
+                    aa= aa+"-merge"
+                    if aa not in indexs:
+                        indexs.append(aa)
+                else:
+                    indexs_other.append(index)
+            except Exception as e:
+                print(str(e))
+                continue
+        return indexs
+
+    def get_size_count(self, ip, idx):
+        url = "http://" + ip + "/" + idx + "/_stats"
+        print("url is " + str(url))
+        try:
+            r = self.s.get(url, headers=self.headers, timeout=60)
+            result = r.content.decode()
+            ret_dict = json.loads(result)
+            count = ret_dict.get("_all").get("primaries").get("docs").get("count")
+            size = ret_dict.get("_all").get("primaries").get("store").get("size_in_bytes")
+            print("count is " + str(count) + ", size is " + str(size))
+            isSuc = True
+        except Exception as e:
+            print("state err, err is " + str(e))
+            count = 0
+            size = 0
+            isSuc = False
+        r.close()
+        return count, size, isSuc
+
+
+if __name__ == '__main__':
+    # arg = parser_arg()
+    # print(arg)
+    # es_reindex = EsReindex(arg.source_ip, arg.dest_ip, arg.classify, arg.merge_data)
+    es_reindex = EsReindex("192.168.10.190","192.168.10.190","month","True")
+    es_reindex.main()

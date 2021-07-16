@@ -3,17 +3,38 @@ package ImportantDemo;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 //获取最小的k个数
 public class Interview40Junior {
     @Test
     public void test01(){
         int[] arr = {5,14,6,23,6,4,1,7,5,3};
-        getLeastNumbers(arr, 4);
+        getLeastNumbers1(arr, 4);
     }
 
     public int[] getLeastNumbers1(int[] arr, int k) {
+        Queue<Integer> queue = new PriorityQueue<Integer>(k, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        });
 
+        for (int i = 0; i < arr.length; i++) {
+            if (i < k) {
+                queue.offer(arr[i]);
+            } else {
+                System.out.println(queue.peek());
+                if (arr[i] < queue.peek()) {
+                    queue.poll();
+                    queue.offer(arr[i]);
+                }
+            }
+        }
+        System.out.println(queue);
         return null;
     }
     public int[] getLeastNumbers(int[] nums, int k) {

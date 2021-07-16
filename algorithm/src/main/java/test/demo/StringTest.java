@@ -2,6 +2,9 @@ package test.demo;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class StringTest {
 
     @Test
@@ -12,5 +15,14 @@ public class StringTest {
         System.out.println(split1.length);
         System.out.println(split2.length);
         System.out.println("a");
+    }
+
+    @Test
+    public void test02(){
+        Map<String, String> map = new HashMap<>();
+        map.put(null , "aa");
+        map.put("bb", null);
+        map.put(null, null);
+        System.out.println(map);
     }
 }
