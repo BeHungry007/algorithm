@@ -22,3 +22,71 @@
 
 搜狗：498，137，82，8，offer58，78, 136(260)；
 美团：143，410，offer24，82，32，102，1143，206，offer42，40，42，146，88，93，15
+
+
+
+/**
+面试-笔试-SQL
+
+1.Hive表: db.t_student
+id|name|birthday |gender
+-----------------------
+01 赵雷 1990-01-01 男
+02 钱电 1990-12-21 男
+03 孙风 1990-05-20 男
+04 李云 1990-08-06 男
+05 周梅 1991-12-01 女
+06 吴兰 1992-03-01 女
+07 郑竹 1989-07-01 女
+08 王菊 1990-01-20 女
+
+
+2.Hive表: db.t_course
+id|name|teacher_id
+-------------------
+01 语文 02
+02 数学 01
+03 英语 03
+
+
+3.Hive表: db.t_teacher
+id|name
+-------
+01 张三
+02 李四
+03 王五
+
+4.Hive表: db.t_score
+student_id|course_id|score
+--------------------------
+01 01 80
+01 02 90
+01 03 99
+02 01 70
+02 02 60
+02 03 80
+03 01 80
+03 02 80
+03 03 80
+04 01 50
+04 02 30
+04 03 20
+05 01 76
+05 02 87
+06 01 31
+06 03 34
+07 02 89
+07 03 98
+
+**/
+
+题目：
+1.按平均成绩从高到低显示所有学生的所有课程的成绩以及平均成绩:
+
+获取各个科目的成绩
+select stu.id,stu.name,sco.score from t_student stu join t_score sco where stu.id = sco.id a1
+
+select a1.id, a1.name,count(*) count, sum(a1.score) sums from ()a1 group by stu.id;
+
+select a2.id, a2.name, rank()over(partition by a2.id order by a2.sums desc) drp sums from () a2;
+
