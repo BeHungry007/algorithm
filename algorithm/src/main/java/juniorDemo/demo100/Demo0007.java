@@ -10,20 +10,9 @@ public class Demo0007 {
     
     @Test
     public void test1() {
-        Integer i = -120;
-        String s1 = i.toString();
-        while (s1.endsWith("0")) {
-            s1 = s1.substring(0, s1.length() - 1);
-        }
-        StringBuilder builder = new StringBuilder(s1.substring(1, s1.length()));
-        char c = s1.charAt(0);
-        StringBuilder reverse = builder.reverse();
-        if(s1.charAt(0) <= '0' || s1.charAt(0) >= '9') {
-           s1 = c + reverse.toString();
-        } else {
-            s1 = reverse.toString() + c;
-        }
-        System.out.println(Integer.parseInt(s1));
+        Integer i = -121;
+        System.out.println(i % 10);
+        System.out.println(i / 10);
 
     }
 

@@ -1,17 +1,8 @@
 package juniorDemo.demo100;
 
-//合并两个有序的链表
+import utils.ListNode;
 
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) { val = x; }
-}
 public class Demo21 {
-
-    public static void main(String[] args) {
-
-    }
 
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null) {

@@ -3,9 +3,17 @@ package test.demo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.elasticsearch.common.collect.CopyOnWriteHashMap;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicStampedReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static java.lang.Thread.*;
 
@@ -133,31 +141,69 @@ public class MapTest {
     }
 
     @Test
-    public void test12(){
-        int i = 1;
-        int j = ++i;
-        int k = i++;
-        System.out.println(j);
-        System.out.println(k);
-    }
-
-    @Test
     public void test13(){
-        int[][] nums = {
-                {1,2,3},
-                {4,5,6},
-                {7,8,9}
-        };
-        System.out.println(nums[0][2]);
+        AtomicInteger atomicInteger = new AtomicInteger();
+        System.out.println(atomicInteger.compareAndSet(3, 4));
+        System.out.println("aa");
+        atomicInteger.getAndIncrement();
+        Collections.synchronizedList(new ArrayList<>());
+        new Vector<String>();
+        new CopyOnWriteArrayList<>();
+        new HashMap<>();
+        new HashSet<>();
+        new CopyOnWriteArraySet<>();
+        new CopyOnWriteHashMap<>();
+        new ConcurrentHashMap<>();
+        new ReentrantLock();
 
     }
 
     @Test
-    public void test022(){
+    public void test013() {
+
+
 
     }
+    //原子引用线程
+    AtomicReference<Thread> atomicReference = new AtomicReference<>();
+    public void myLock() {
+        Thread thread = Thread.currentThread();
+        System.out.println(thread.currentThread().getName() + "\t come in");
+        while (!atomicReference.compareAndSet(null, thread)) {
 
+        }
+    }
 
+    public void myUnlock() {
+        Thread thread = Thread.currentThread();
+
+        atomicReference.compareAndSet(thread, null);
+        System.out.println(thread.currentThread().getName() + "\t invoked muUnlock");
+    }
+
+    public static void main(String[] args) {
+        MapTest mapTest = new MapTest();
+        new Thread(() -> {
+            mapTest.myLock();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            mapTest.myUnlock();
+        }, "AA").start();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        new Thread(() -> {
+            mapTest.myLock();
+            mapTest.myUnlock();
+        }, "BB").start();
+    }
 
 
 }

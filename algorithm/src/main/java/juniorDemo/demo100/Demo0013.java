@@ -3,9 +3,13 @@ package juniorDemo.demo100;
 /*罗马数字转整数*/
 
 
-public class Demo0013 {
-    public static void main(String[] args) {
+import org.junit.Test;
 
+public class Demo0013 {
+    @Test
+    public void test01(){
+        String s = "VX";
+        RomanToInt(s);
     }
 
     public int RomanToInt(String s) {
