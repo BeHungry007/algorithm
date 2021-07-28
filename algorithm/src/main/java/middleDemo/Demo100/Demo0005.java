@@ -1,11 +1,19 @@
 package middleDemo.Demo100;
 
+import org.junit.Test;
+
 /**
  * 最长回文子串
  *
  *  给定一个字符串s，找到s中最长的回文子串。假设s的最大长度为1000
  */
 public class Demo0005 {
+
+    @Test
+    public void test01(){
+        System.out.println(longestPalindrome("abcgfgfcba"));
+        System.out.println(longestPalindrome("abcdcba"));
+    }
 
     public String longestPalindrome(String s) {
         if (s.equals("")) return "";

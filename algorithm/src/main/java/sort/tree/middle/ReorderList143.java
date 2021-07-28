@@ -10,6 +10,16 @@ import utils.ListNode;
  */
 public class ReorderList143 {
 
+    /**
+     * 1. 先获取到后一半链表的第一个位置；
+     * 2. 将后一半链表反转(反转的起点cur, pre = null, next = null)；
+     *      2.1 获取反转链表的当前位置cur;
+     *      2.2 获取cur的下一个位置next;
+     *      2.3 将cur指向pre;
+     *      2.4 将cur赋值给pre;
+     *      2.5 将next赋值给cur
+     * @param head
+     */
     public void reorderList(ListNode head) {
         if (head == null) {
             return;
